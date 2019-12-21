@@ -1,0 +1,80 @@
+<html lang="en">
+  <head>
+    <title>How Many Days</title>
+    <link rel="shortcut" href="favicon.png" />
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="favicon-64.png" sizes="64x64">
+    <link rel="icon" type="image/png" href="favicon-128.png" sizes="128x128">
+    <style>
+      html, body {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: sans-serif;
+        text-align: center;
+        background: black;
+        color: white;
+      }
+      .y {
+        background: rebeccapurple;
+      }
+      a {
+        color: red;
+      }
+      #d {
+        font-size: 20rem;
+        vertical-align: top;
+      }
+      #p {
+        font-size: 2rem;
+        line-height: 3rem;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="d"></h1>
+    <p id="p">
+      Add a Date to the URL<br/>
+      <a href="/1999-12-31">https://howmanydays.web.app/1999-12-31</a>
+    </p>
+    <script>
+      (function(){
+        function c() {
+
+          const n = new Date();
+          const d = new Date(location.pathname);
+
+          if (!isNaN(d)) {
+            const t = n.getTime() - d.getTime();
+            const f = Math.floor(t / 86400000);
+
+            const dq = d.getDate() === n.getDate();
+            const mq = d.getMonth() === n.getMonth();
+            const y = f > 0 && dq && mq;
+
+            document.body.className = y ? 'y' : '';
+
+            const s = f.toLocaleString();
+            const fs = Math.floor(100 / (s.length + 1));
+
+            const e = document.getElementById('d');
+            e.style.fontSize = `${fs}rem`;
+            e.innerText = s;
+            return;
+          }
+
+          document.getElementById('p').style.display = 'block';
+        }
+        c();
+        setInterval(c, 60000);
+      }())
+    </script>
+  </body>
+</html>
